@@ -1,5 +1,19 @@
-import Image from "next/image";
+import SideBar from "@/components/SideBar";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return <h1 className="text-gray-400">hi</h1>;
+export default async function HomePage() {
+  const sesstion = await getServerSession(authOptions);
+  const user = sesstion?.user;
+  if (!user) {
+    redirect("/auth/signin");
+  }
+  return (
+    <section className="w-full flex flex-col md:flex-row max-w-[850px] p-4">
+      <div className="basis-1/4">
+        <SideBar user={user} />
+      </div>
+    </section>
+  );
 }
