@@ -1,8 +1,8 @@
 "use client";
 import { SimplePost } from "@/model/posts";
-import { DotLoader } from "react-spinners";
 import useSWR from "swr";
 import PostListCard from "./PostListCard";
+import GridSpinner from "./ui/GridSpinner";
 
 export default function PostList() {
   const { data: posts, isLoading: loading } =
@@ -12,14 +12,14 @@ export default function PostList() {
     <section>
       {loading && (
         <div className="flex justify-center mt-32">
-          <DotLoader color="red" />
+          <GridSpinner color="red" />
         </div>
       )}
       {posts && (
         <ul>
-          {posts.map((post) => (
+          {posts.map((post, index) => (
             <li key={post.id} className="mb-4">
-              <PostListCard post={post} />
+              <PostListCard post={post} priority={index < 2} />
             </li>
           ))}
         </ul>
