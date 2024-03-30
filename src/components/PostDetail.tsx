@@ -1,4 +1,4 @@
-import { FullPost, SimplePost } from "@/model/posts";
+import { FullPost, SimplePost } from "@/model/post";
 import Image from "next/image";
 import userSWR from "swr";
 import PostUserAvatar from "./PostUserAvatar";
