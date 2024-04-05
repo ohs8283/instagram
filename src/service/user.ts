@@ -31,8 +31,8 @@ export async function getUserByUsername(username: string) {
       followers[]->{username,image},
       "bookmarks":bookmarks[]->_id
     }`,
-
-    { username }
+    { username },
+    { cache: "no-store" }
   );
 }
 
@@ -46,8 +46,9 @@ export async function searchUsers(keyword?: string) {
       ...,
       "following": count(following),
       "followers": count(followers),
-    }
-    `
+    }`,
+      undefined,
+      { cache: "no-store" }
     )
     .then((users) =>
       users.map((user: SearchUser) => ({
@@ -67,8 +68,9 @@ export async function getUserForProfile(username: string) {
       "following": count(following),
       "followers": count(followers),
       "posts": count(*[_type=="post" && author->username == "${username}"])
-    }
-    `
+    }`,
+      undefined,
+      { cache: "no-store" }
     )
     .then((user) => ({
       ...user,
@@ -96,4 +98,28 @@ export async function removeBookmark(userId: string, postId: string) {
     .patch(userId)
     .unset([`bookmarks[_ref=="${postId}"]`])
     .commit();
+}
+
+export async function follow(myId: string, targetId: string) {
+  return client
+    .transaction() //
+    .patch(myId, (user) =>
+      user
+        .setIfMissing({ following: [] })
+        .append("following", [{ _ref: targetId, _type: "reference" }])
+    )
+    .patch(targetId, (user) =>
+      user
+        .setIfMissing({ followers: [] })
+        .append("followers", [{ _ref: myId, _type: "reference" }])
+    )
+    .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function unfollow(myId: string, targetId: string) {
+  return client
+    .transaction() //
+    .patch(myId, (user) => user.unset([`following[_ref=="${targetId}"]`]))
+    .patch(targetId, (user) => user.unset([`followers[_ref=="${myId}"]`]))
+    .commit({ autoGenerateArrayKeys: true });
 }
