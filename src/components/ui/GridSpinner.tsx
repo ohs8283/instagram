@@ -1,8 +1,7 @@
 import dynamic from "next/dynamic";
-import { LoaderSizeMarginProps } from "react-spinners/helpers/props";
 
-const DotLoader = dynamic<LoaderSizeMarginProps>(
-  () => import("react-spinners").then((lib) => lib.GridLoader),
+const DotLoader = dynamic(
+  () => import("react-spinners").then((lib) => lib.DotLoader),
   {
     ssr: false,
   }

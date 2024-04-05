@@ -16,7 +16,7 @@ export default function PostGrid({ username, query }: Props) {
 
   return (
     <div className="w-full text-center">
-      {isLoading && <GridSpinner />}
+      <div className="flex justify-center">{isLoading && <GridSpinner />}</div>
       <ul className="grid grid-cols-3 gap-4 py-4 px-8">
         {posts &&
           posts.map((post, index) => (

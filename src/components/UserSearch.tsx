@@ -32,7 +32,7 @@ export default function UserSearch() {
         />
       </form>
       {error && <p>비상!!!!</p>}
-      {isLoading && <GridSpinner />}
+      <div className="flex justify-center">{isLoading && <GridSpinner />}</div>
       {!isLoading && !error && users?.length === 0 && (
         <p>찾는 사용자가 없어요 ㅠㅠ</p>
       )}
