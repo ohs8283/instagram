@@ -19,7 +19,7 @@ const authOptions: NextAuthOptions = {
         name: name || "",
         image,
         email,
-        username: email?.split("@")[0],
+        username: email.split("@")[0],
       });
       return true;
     },

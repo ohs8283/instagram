@@ -2,7 +2,7 @@
 
 import { SimplePost } from "@/model/post";
 import Image from "next/image";
-import CommentFrom from "./CommentForm";
+import CommentForm from "./CommentForm";
 import ActionBar from "./ActionBar";
 import { useState } from "react";
 import ModalPortal from "./ui/ModalPortal";
@@ -20,7 +20,7 @@ export default function PostListCard({ post, priority = false }: Props) {
   const [openModal, setOpenModal] = useState(false);
 
   return (
-    <article className="rounded-lg shadow-md border-gray-200">
+    <article className="rounded-lg shadow-md border border-gray-200">
       <PostUserAvatar image={userImage} username={username} />
       <Image
         className="w-full object-cover aspect-square"
@@ -32,7 +32,7 @@ export default function PostListCard({ post, priority = false }: Props) {
         onClick={() => setOpenModal(true)}
       />
       <ActionBar post={post} />
-      <CommentFrom />
+      <CommentForm />
       {openModal && (
         <ModalPortal>
           <PostModal onClose={() => setOpenModal(false)}>

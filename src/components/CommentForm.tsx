@@ -1,6 +1,6 @@
 import SmileIcon from "./ui/icons/SmileIcon";
 
-export default function CommentFrom() {
+export default function CommentForm() {
   return (
     <form className="flex items-center px-3 border-t border-neutral-300">
       <SmileIcon />

@@ -6,8 +6,8 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
 export default async function HomePage() {
-  const sesstion = await getServerSession(authOptions);
-  const user = sesstion?.user;
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
   if (!user) {
     redirect("/auth/signin");
   }

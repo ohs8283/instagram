@@ -10,7 +10,7 @@ export default function UserCard({
 }: Props) {
   return (
     <Link
-      href={`user/${username}`}
+      href={`/user/${username}`}
       className="flex items-center w-full rounded-sm border border-neutral-300 mb-2 p-4 bg-white hover:bg-neutral-50"
     >
       <Avatar image={image} />
