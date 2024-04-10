@@ -7,8 +7,14 @@ export default function PostGrid() {
 
   return (
     <div className="w-full text-center">
-      <div className="flex justify-center">{isLoading && <GridSpinner />}</div>
-      <ul className="grid grid-cols-3 gap-4 py-4 px-8">
+      <div className={`flex justify-center ${isLoading ? "pt-24" : ""}`}>
+        {isLoading && <GridSpinner />}
+      </div>
+      <ul
+        className={`grid grid-cols-3 gap-4 py-4 px-8 ${
+          isLoading ? "opacity-0" : "opacity-100"
+        }`}
+      >
         {posts &&
           posts.map((post, index) => (
             <li key={post.id}>
