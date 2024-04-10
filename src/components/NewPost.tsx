@@ -89,7 +89,7 @@ export default function NewPost({ user: { username, image } }: Props) {
         />
         <label
           className={`w-full h-60 flex flex-col items-center justify-center ${
-            !file && "border-2 border-sky-500 border-dashed"
+            !file && "border-2 border-sky-500 border-dashed rounded-2xl"
           }`}
           htmlFor="input-upload"
           onDragEnter={handleDrag}
@@ -119,7 +119,7 @@ export default function NewPost({ user: { username, image } }: Props) {
           )}
         </label>
         <textarea
-          className="outline-none text-lg border border-neutral-300"
+          className="outline-none text-lg border border-neutral-300 mt-10 mb-4 rounded-md"
           name="text"
           id="input-text"
           required
