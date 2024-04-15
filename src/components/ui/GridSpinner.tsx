@@ -11,6 +11,6 @@ type Props = {
   color?: string;
 };
 
-export default function GridSpinner({ color = "red" }: Props) {
+export default function GridSpinner({ color = "#46c2e3" }: Props) {
   return <DotLoader color={color} />;
 }
