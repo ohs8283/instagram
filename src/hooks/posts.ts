@@ -16,6 +16,13 @@ async function addComment(id: string, comment: string) {
   }).then((res) => res.json());
 }
 
+async function deleteComment(id: string, userId: string) {
+  return fetch("/api/comments ", {
+    method: "DELETE",
+    body: JSON.stringify({ id, userId }),
+  }).then((res) => res.json());
+}
+
 export default function usePosts() {
   const cacheKeys = useCacheKeys();
 
@@ -50,9 +57,12 @@ export default function usePosts() {
     (post: SimplePost, comment: Comment) => {
       const newPost = {
         ...post,
-        comments: post.comments + 1,
+        comments: post.comments.length + 1, // 배열의 길이를 증가시킵니다.
       };
-      const newPosts = posts?.map((p) => (p.id === post.id ? newPost : p));
+
+      const newPosts: SimplePost[] | undefined = posts?.map((p) =>
+        p.id === post.id ? newPost : p
+      ) as SimplePost[] | undefined;
 
       return mutate(addComment(post.id, comment.comment), {
         optimisticData: newPosts,
@@ -63,5 +73,29 @@ export default function usePosts() {
     },
     [posts, mutate]
   );
-  return { posts, isLoading, error, setLike, postComment };
+
+  const deletePostComment = useCallback(
+    (postId: string, userId: string) => {
+      const newPosts = posts?.map((post) => {
+        if (post.id === postId) {
+          return {
+            ...post,
+            comments: post.comments.filter(
+              (comment: Comment) => comment.userId !== userId
+            ),
+          };
+        }
+        return post;
+      });
+
+      return mutate(newPosts, {
+        optimisticData: newPosts,
+        populateCache: false,
+        revalidate: false,
+        rollbackOnError: true,
+      });
+    },
+    [posts, mutate]
+  );
+  return { posts, isLoading, error, setLike, postComment, deletePostComment };
 }
