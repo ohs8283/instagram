@@ -29,8 +29,18 @@ export default function ActionBar({ post, children, onComment }: Props) {
     user && setBookmark(id, bookmark);
   };
 
-  const handleComment = (comment: string) => {
-    user && onComment({ comment, username: user.username, image: user.image });
+  const handleComment = (commentData: {
+    comment: string;
+    commentId: string;
+  }) => {
+    const { comment, commentId } = commentData;
+    user &&
+      onComment({
+        comment,
+        username: user.username,
+        image: user.image,
+        commentId,
+      }); // commentId를 함께 전달
   };
 
   return (
