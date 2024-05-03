@@ -4,13 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   return withSessionUser(async (user) => {
-    const { id, comment } = await req.json();
+    const { id, comment, commentId } = await req.json();
 
-    if (!id || comment == null) {
+    if (!id || !comment || !commentId) {
       return new Response("Bad Request", { status: 400 });
     }
 
-    return addComment(id, user.id, comment)
+    return addComment(id, user.id, comment, commentId)
       .then((res) => NextResponse.json(res))
       .catch((error) => new Response(JSON.stringify(error), { status: 500 }));
   });
@@ -18,13 +18,13 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   return withSessionUser(async (user) => {
-    const { id, userId } = await req.json();
+    const { id, commentId } = await req.json(); // commentId를 요청에서 받아옴
 
-    if (!id || !userId) {
+    if (!id || !commentId) {
       return new Response("Bad Request", { status: 400 });
     }
 
-    return deleteComment(id, user.id)
+    return deleteComment(id, commentId) // deleteComment 함수에 commentId 전달
       .then(() => NextResponse.json({ success: true }))
       .catch((error) => new Response(JSON.stringify(error), { status: 500 }));
   });

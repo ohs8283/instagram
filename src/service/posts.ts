@@ -36,16 +36,15 @@ export async function getPost(id: string) {
       "userImage": author->image,
       "image": photo,
       "likes": likes[]->username,
-      comments[]{comment, "username": author->username, "image": author->image},
+      comments[]{comment, "username": author->username, "image": author->image, "commentId": commentId},
       "id":_id,
-      "createdAt":_creatdAt
+      "createdAt":_createdAt
     }`,
       undefined,
       { cache: "no-store" }
     )
     .then((post) => ({ ...post, image: urlFor(post.image) }));
 }
-
 export async function getPostsOf(username: string) {
   return client
     .fetch(
@@ -117,7 +116,8 @@ export async function dislikePost(postId: string, userId: string) {
 export async function addComment(
   postId: string,
   userId: string,
-  comment: string
+  comment: string,
+  commentId: string
 ) {
   return client
     .patch(postId) //
@@ -126,6 +126,7 @@ export async function addComment(
       {
         comment,
         author: { _ref: userId, _type: "reference" },
+        commentId,
       },
     ])
     .commit({ autoGenerateArrayKeys: true });
@@ -158,4 +159,11 @@ export async function createPost(userId: string, text: string, file: Blob) {
         { autoGenerateArrayKeys: true }
       );
     });
+}
+
+export async function deleteComment(postId: string, commentId: string) {
+  return client
+    .patch(postId)
+    .unset([`comments[_key == "${commentId}"]`])
+    .commit();
 }
