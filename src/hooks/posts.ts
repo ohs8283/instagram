@@ -57,7 +57,7 @@ export default function usePosts() {
     (post: SimplePost, comment: Comment) => {
       const newPost = {
         ...post,
-        comments: post.comments.length + 1, // 배열의 길이를 증가시킵니다.
+        comments: post.comments.length + 1,
       };
 
       const newPosts: SimplePost[] | undefined = posts?.map((p) =>
@@ -75,13 +75,13 @@ export default function usePosts() {
   );
 
   const deletePostComment = useCallback(
-    (postId: string, userId: string) => {
+    (postId: string, commentId: string) => {
       const newPosts = posts?.map((post) => {
         if (post.id === postId) {
           return {
             ...post,
             comments: post.comments.filter(
-              (comment: Comment) => comment.userId !== userId
+              (comment: Comment) => comment.commentId !== commentId
             ),
           };
         }

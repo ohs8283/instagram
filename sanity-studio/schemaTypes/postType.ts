@@ -52,7 +52,7 @@ export const postType = defineType({
             defineField({
               title: 'Comment ID',
               name: 'commentId',
-              type: 'string', // 이 부분은 comment의 고유 식별자 타입으로 변경할 수 있습니다.
+              type: 'string',
             }),
           ],
         },

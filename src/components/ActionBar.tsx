@@ -40,7 +40,7 @@ export default function ActionBar({ post, children, onComment }: Props) {
         username: user.username,
         image: user.image,
         commentId,
-      }); // commentId를 함께 전달
+      });
   };
 
   return (
