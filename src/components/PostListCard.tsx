@@ -1,5 +1,3 @@
-"use client";
-
 import { Comment, SimplePost } from "@/model/post";
 import Image from "next/image";
 import ActionBar from "./ActionBar";
@@ -40,7 +38,7 @@ export default function PostListCard({ post, priority = false }: Props) {
           <span className="font-bold mr-1">{username}</span>
           {text}
         </p>
-        {comments > 1 && (
+        {comments && typeof comments === "number" && comments > 1 && (
           <p>
             <button
               className="font-bold my-2 text-sky-500"
