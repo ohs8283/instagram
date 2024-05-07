@@ -48,12 +48,14 @@ const PostDetail: React.FC<Props> = ({ post }: Props) => {
                     size="small"
                     highlight={commentUsername === username}
                   />
-                  <div className="ml-2 flex items-center">
-                    <span className="font-bold mr-1">{commentUsername}</span>
-                    <span>{comment}</span>
-                    {commentUsername === username && (
+                  <div className="ml-2 flex items-center w-full justify-between">
+                    <div className="flex items-center">
+                      <span className="font-bold mr-1">{commentUsername}</span>
+                      <span>{comment}</span>
+                    </div>
+                    {commentUsername === username && index !== 0 && (
                       <button
-                        className="ml-1 text-red-500 hover:text-red-700"
+                        className="text-red-500 hover:text-red-700 mr-2"
                         onClick={() => handleDeleteComment(commentId)}
                       >
                         X
