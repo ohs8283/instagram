@@ -14,10 +14,7 @@ export default function SideBar({ user: { name, username, image } }: Props) {
           <p className="text-lg text-neutral-500 leading-4">{name}</p>
         </div>
       </div>
-      <p className="text-sm text-neutral-500 mt-8">
-        About ∙ Help ∙ Press ∙ API ∙ Jobs ∙ Privacy ∙ Terms ∙ Location ∙
-        Language
-      </p>
+
       <p className="font-bold text-sm text-neutral-500 mt-8">
         @Copyright INSTAGRAM from METAL
       </p>

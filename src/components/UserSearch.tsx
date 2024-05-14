@@ -26,7 +26,7 @@ export default function UserSearch() {
           className="w-full text-xl p-3 outline-none border border-gray-400"
           type="text"
           autoFocus
-          placeholder="Serach for a username or name"
+          placeholder="Search for a username or name"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
         />
