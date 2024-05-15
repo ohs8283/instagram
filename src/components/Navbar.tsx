@@ -11,6 +11,14 @@ import { usePathname } from "next/navigation";
 import ColorButton from "./ui/ColorButton";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Avatar from "./Avatar";
+import { Itim } from "next/font/google";
+
+const itim = Itim({
+  subsets: ["latin"],
+  weight: "400",
+  style: "normal",
+  display: "swap",
+});
 
 const menu = [
   {
@@ -40,7 +48,9 @@ export default function Navbar() {
   return (
     <div className="flex justify-between items-center px-6">
       <Link href="/" aria-label="Home">
-        <h1 className="text-3xl font-bold">Instagram</h1>
+        <div className={itim.className}>
+          <h1 className="text-4xl font-bold">Instagram</h1>
+        </div>
       </Link>
       <nav>
         <ul className="flex gap-4 items-center p-4">
