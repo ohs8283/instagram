@@ -45,7 +45,7 @@ export default function Navbar() {
       <nav>
         <ul className="flex gap-4 items-center p-4">
           {menu.map(({ href, icon, clickedIcon, title }) => (
-            <li key={href}>
+            <li key={href} className={href === "/" ? "hidden sm:block" : ""}>
               <Link href={href} aria-label={title}>
                 {pathName === href ? clickedIcon : icon}
               </Link>
