@@ -22,8 +22,8 @@ const PostDetail: React.FC<Props> = ({ post }: Props) => {
   };
 
   return (
-    <section className="flex w-full h-full">
-      <div className="relative basis-3/5">
+    <section className="flex flex-col sm:flex-row w-full h-full">
+      <div className="sm:relative absolute sm:basis-3/5 mb-4 sm:mb-0">
         <Image
           className="object-cover"
           src={image}
@@ -33,9 +33,9 @@ const PostDetail: React.FC<Props> = ({ post }: Props) => {
           sizes="650px"
         />
       </div>
-      <div className="w-full basis-2/5 flex flex-col">
+      <div className="w-full sm:basis-2/5 flex flex-col">
         <PostUserAvatar image={userImage} username={username} />
-        <ul className="border-t border-gray-200 h-full overflow-y-auto p-4 mb-1">
+        <ul className="border-t border-gray-200 flex-grow overflow-y-auto p-4 mb-1">
           {comments &&
             comments.map(
               (
