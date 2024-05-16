@@ -9,10 +9,11 @@ async function updateLike(id: string, like: boolean) {
     body: JSON.stringify({ id, like }),
   }).then((res) => res.json());
 }
-async function addComment(id: string, comment: string) {
-  return fetch("/api/comments ", {
+
+async function addComment(id: string, comment: string, commentId: string) {
+  return fetch("/api/comments", {
     method: "POST",
-    body: JSON.stringify({ id, comment }),
+    body: JSON.stringify({ id, comment, commentId }),
   }).then((res) => res.json());
 }
 
@@ -55,16 +56,17 @@ export default function usePosts() {
 
   const postComment = useCallback(
     (post: SimplePost, comment: Comment) => {
+      const newCommentCount = post.comments + 1;
       const newPost = {
         ...post,
-        comments: post.comments.length + 1,
+        comments: newCommentCount,
       };
 
       const newPosts: SimplePost[] | undefined = posts?.map((p) =>
         p.id === post.id ? newPost : p
       ) as SimplePost[] | undefined;
 
-      return mutate(addComment(post.id, comment.comment), {
+      return mutate(addComment(post.id, comment.comment, comment.commentId), {
         optimisticData: newPosts,
         populateCache: false,
         revalidate: false,
@@ -80,9 +82,7 @@ export default function usePosts() {
         if (post.id === postId) {
           return {
             ...post,
-            comments: post.comments.filter(
-              (comment: Comment) => comment.commentId !== commentId
-            ),
+            comments: post.comments - 1,
           };
         }
         return post;
